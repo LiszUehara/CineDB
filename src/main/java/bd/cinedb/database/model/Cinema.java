@@ -3,10 +3,14 @@ package bd.cinedb.database.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -23,6 +27,29 @@ public class Cinema implements Serializable{
 	
 	private String name;
 	private String local;
+	
+
+	@ManyToOne(targetEntity = Filme.class)
+	@JoinColumn(name = "filme_id", 
+		nullable = true, 
+		foreignKey = 
+	@ForeignKey(
+			name = "filme_id", 
+			value = ConstraintMode.CONSTRAINT
+			))
+	private Filme filmes;
+	
+	@ManyToOne(targetEntity = Filme.class)
+	@JoinColumn(name = "ticket_id", 
+		nullable = true, 
+		foreignKey = 
+	@ForeignKey(
+			name = "ticket_id", 
+			value = ConstraintMode.CONSTRAINT
+			))
+	private Ticket ticket;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -40,6 +67,20 @@ public class Cinema implements Serializable{
 	}
 	public void setLocal(String local) {
 		this.local = local;
+	}
+	
+	
+	public Filme getFilmes() {
+		return filmes;
+	}
+	public void setFilmes(Filme filmes) {
+		this.filmes = filmes;
+	}
+	public Ticket getTicket() {
+		return ticket;
+	}
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
 	}
 	@Override
 	public int hashCode() {

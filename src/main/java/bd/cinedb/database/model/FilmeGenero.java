@@ -1,7 +1,6 @@
 package bd.cinedb.database.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 import jakarta.persistence.ConstraintMode;
@@ -11,40 +10,29 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "session")
-@SequenceGenerator(name = "seq_session", sequenceName = "seq_session", allocationSize = 1, initialValue = 1)
-public class Session implements Serializable {
+@Table(name =   "filme_genero")
+@SequenceGenerator(name = "seq_filme_genero", sequenceName = "seq_filme_genero", allocationSize = 1, initialValue = 1)
+public class FilmeGenero implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_session")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_filme_genero")
 	private Long id;
 	
-	@Temporal(TemporalType.DATE)
-	private Date dataFilme;
-	
-	private String cadeira;
-
-	@ManyToOne(targetEntity = Filme.class)
+	@OneToOne(targetEntity = Genre.class)
 	@JoinColumn(
-			name = "filme_id", 
+			name = "genre_id", 
 			nullable = false, 
 	foreignKey = 
 	@ForeignKey(
-			name = "filme_fk", 
+			name = "genre_fk", 
 			value = ConstraintMode.CONSTRAINT))
-	private Ticket ticket;
+	private Genre genre;
 
 	public Long getId() {
 		return id;
@@ -54,20 +42,12 @@ public class Session implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDataFilme() {
-		return dataFilme;
+	public Genre getGenre() {
+		return genre;
 	}
 
-	public void setDataFilme(Date dataFilme) {
-		this.dataFilme = dataFilme;
-	}
-
-	public String getCadeira() {
-		return cadeira;
-	}
-
-	public void setCadeira(String cadeira) {
-		this.cadeira = cadeira;
+	public void setGenre(Genre genre) {
+		this.genre = genre;
 	}
 
 	@Override
@@ -83,7 +63,7 @@ public class Session implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Session other = (Session) obj;
+		FilmeGenero other = (FilmeGenero) obj;
 		return Objects.equals(id, other.id);
 	}
 	

@@ -2,10 +2,14 @@ package bd.cinedb.database.model;
 
 import java.io.Serializable;
 
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -24,6 +28,19 @@ public class Usuario implements Serializable {
 	private String name;
 	private String password;
 	private Boolean tipoUser;
+	
+	
+	@OneToOne(targetEntity = Ticket.class)
+	@JoinColumn(
+			name = "ticket_id", 
+			nullable = false, 
+	foreignKey = 
+	@ForeignKey(
+			name = "ticket_fk", 
+			value = ConstraintMode.CONSTRAINT))
+	private Ticket ticket;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -59,6 +76,12 @@ public class Usuario implements Serializable {
 	}
 	public void setTipoUser(Boolean tipoUser) {
 		this.tipoUser = tipoUser;
+	}
+	public Ticket getTicket() {
+		return ticket;
+	}
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
 	}
 	
 	
